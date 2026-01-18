@@ -1,6 +1,7 @@
 #version 330 core
 out vec4 FragColor;
+uniform vec4 ourColor; // We will set this from C++
 
 void main() {
-    FragColor = vec4(0.0f, 0.7f, 0.0f, 1.0f); //green
+    FragColor = ourColor;
 }

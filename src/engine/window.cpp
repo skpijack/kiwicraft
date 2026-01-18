@@ -1,5 +1,5 @@
 #include "window.hpp"
-#include <GLFW/glfw3.h>
+
 
 Window::Window(int width, int height, const char* title){
     if (!glfwInit()){
@@ -28,6 +28,20 @@ Window::Window(int width, int height, const char* title){
 Window::~Window(){
     glfwDestroyWindow(m_window);
     glfwTerminate();
+}
+void Window::setupInput(InputHandler* handler) {
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetWindowUserPointer(m_window, handler);
+
+    glfwSetCursorPosCallback(m_window, [](GLFWwindow* w, double xpos, double ypos) {
+        auto* ih = static_cast<InputHandler*>(glfwGetWindowUserPointer(w));
+        ih->handleMouse(xpos, ypos);
+    });
+
+    glfwSetKeyCallback(m_window, [](GLFWwindow* w, int key, int scancode, int action, int mods) {
+        auto* ih = static_cast<InputHandler*>(glfwGetWindowUserPointer(w));
+        ih->handleKey(key, scancode, action, mods);
+    });
 }
 
 bool Window::shouldClose(){return glfwWindowShouldClose(m_window);}

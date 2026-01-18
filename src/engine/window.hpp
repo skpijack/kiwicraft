@@ -1,6 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "input_handler.hpp"
 #include <iostream>
 
 class Window{
@@ -12,7 +13,9 @@ class Window{
     void swapBuffers();
     void pollEvents();
     void clear(float r , float g, float b, float a);
+    void setupInput(InputHandler* handler);
 
+    GLFWwindow* getHandle() { return m_window; }
     GLFWwindow* getGLFWwindow() {return m_window;}
 private:
     GLFWwindow* m_window;

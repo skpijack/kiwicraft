@@ -15,15 +15,16 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/engine/window.cpp
     src/engine/engine.cpp
+    src/engine/input_handler.cpp
     src/renderer/shader.cpp
-    src/renderer/renderer.cpp)
+    src/renderer/renderer.cpp
+    src/renderer/camera.cpp
+    src/renderer/mesh.cpp)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_CURRENT_SOURCE_DIR}/shaders"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders"
-    COMMENT "Copying shaders to the build directory..."
-)
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/bin/shaders")
+
+configure_file(shaders/vertex.glsl "${CMAKE_BINARY_DIR}/bin/shaders/vertex.glsl" COPYONLY)
+configure_file(shaders/fragment.glsl "${CMAKE_BINARY_DIR}/bin/shaders/fragment.glsl" COPYONLY)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw

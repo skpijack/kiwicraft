@@ -26,7 +26,6 @@ Linux
   - Install a C++ toolchain (GCC/Clang) and CMake.
 - Build steps
   - Create a build directory: `mkdir -p build && cd build`.
-  - Install dependencies: `conan install .. --build=missing`.
-  - Configure: `cmake .. -DCMAKE_BUILD_TYPE=Release`.
-  - Build: `cmake --build .`.
+  - Install dependencies: `conan install . --output-folder=build --build=missing`.
+  - Build: `cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release`
   - Run: `./bin/kiwicraft` (path under `build/bin`).
